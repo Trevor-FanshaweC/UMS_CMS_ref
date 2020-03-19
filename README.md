@@ -5,7 +5,9 @@ This example connects to a lightweight SQL db for UMS. The front end is built on
 
 Back end runs on PDO with a procedural approach - no OOP, just functions and a very basic routing implementaion (if you can even call it routing)
 
-####TODOs: implement Docker, move the Fetch API functionality to an external file and then re-import
+#### TODOs: 
+- implement Docker
+- move the Fetch API functionality to an external file and then re-import
 - change the strategy to async / await instead of callbacks
 
 ## Requirements:
