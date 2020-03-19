@@ -11,9 +11,9 @@ Back end runs on PDO with a procedural approach - no OOP, just functions and a v
 - change the strategy to async / await instead of callbacks
 
 ## Requirements:
-Vue 
-Git 
-mySQL / PDO
+- Vue 
+- Git 
+- mySQL / PDO
 
 ## How to use:
 Clone to your local server (MAMP/htdocs, www directory)
