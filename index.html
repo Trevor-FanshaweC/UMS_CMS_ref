@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>Document</title>
+</head>
+<body>
+    <main id="app">
+        <h3>Manage users:</h3>
+            <ul class="users" v-if="users.length > 0">
+                <li v-for="user in users">
+                    <span class="user-info">{{user.fname}} {{user.lname}} | username: {{user.uname}}</span>
+                    <button @click="manageUsers('deleteOne', {id: user.id}, updateUserList(user, 'delete'))">delete</button>
+                </li>
+            </ul>
+
+            <h3>Add User</h3>
+
+            <section class="add-user-form">
+                <form @submit.prevent="createUser">
+                    <label for="uname">Username:</label>
+                    <input type="text" name="uname" required placeholder="username">
+
+                    <label for="fname">First Name:</label>
+                    <input type="text" required placeholder="first name" name="fname">
+
+                    <label for="lname">Last Name:</label>
+                    <input type="text" required placeholder="last name" name="lname">
+
+                    <label for="admin">Administrator?</label>
+                    <input type="checkbox" name="admin">
+
+                    <label for="permissions">Permissions (1 -5)</label>
+                    <input type="number" name="permissions" min="1" max="5" required>
+
+                    <input type="submit" value="Add User">
+
+                </form>
+            </section>
+    </main>
+    <script src="js/main.js" type="module"></script>
+</body>
+</html>
