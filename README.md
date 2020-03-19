@@ -22,8 +22,8 @@ Check the credentials in connect.php
 
 Run from your local server
 
-##License
+## License
 MIT
 
-##Credits
+## Credits
 Just me.
