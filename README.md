@@ -17,7 +17,9 @@ Back end runs on PDO with a procedural approach - no OOP, just functions and a v
 
 ## How to use:
 Clone to your local server (MAMP/htdocs, www directory)
+
 Check the credentials in connect.php
+
 Run from your local server
 
 ##License
