@@ -19,6 +19,20 @@
 
         $allPostEntries = filter_input_array(INPUT_POST);
 
+        // get the variables ready!
+        $queryPlaceholder = [];
+
+        foreach($allPostEntries as $item) {
+            $queryPlaceholder[] = '?';
+        }
+
+        $insert_fields = implode(',', array_keys($allPostEntries));
+        $insert_values = implode(',', $queryPlacholder);
+
+        $query = "INSER INTO users ($insert_fields) VALUES ($insert_values)";
+
+        echo $query;
+
         return $allPostEntries;
 
         //return "need to finish the addUser function - stripping POST is workin";
