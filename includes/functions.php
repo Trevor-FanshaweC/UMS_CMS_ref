@@ -15,7 +15,6 @@
     // to build out the values and params
     
     function addUser($conn) {
-        //echo "hit add user route";
 
         $allPostEntries = filter_input_array(INPUT_POST);
 
@@ -27,15 +26,23 @@
         }
 
         $insert_fields = implode(',', array_keys($allPostEntries));
-        $insert_values = implode(',', $queryPlacholder);
+        $insert_values = implode(',', array_values($queryPlaceholder));
 
-        $query = "INSER INTO users ($insert_fields) VALUES ($insert_values)";
+        //echo $insert_fields;
+       // echo "values:" . $insert_values;
 
-        echo $query;
+        $query = "INSERT INTO users ($insert_fields) VALUES ($insert_values)";
 
-        return $allPostEntries;
+        // echo $query;
 
-        //return "need to finish the addUser function - stripping POST is workin";
+        $result = $conn->prepare($query);
+        $addedUser = $result->execute(array_values($allPostEntries));
+
+        if ($addedUser) {
+            return array("result" => $addedUser); // "added new user";
+        } else {
+            return array("result" => false);
+        }
     }
 
     function deleteUser($conn, $userID) {
