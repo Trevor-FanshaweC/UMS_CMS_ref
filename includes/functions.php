@@ -1,6 +1,32 @@
 <?php
     include('connect.php');
 
+    function getUserFormFields($conn) {
+        $query = "DESCRIBE users";
+        $result = $conn->query($query);
+
+        //$fields = [];
+        $form = "";
+
+        // build the form on the server side and send it to the client
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            if ($row["Field"] !== "id") {
+                //$fields[] = $row["Field"];
+
+                $inputType = "text";
+                
+                $form .= "<label for='" . $row["Field"] . "'>" .$row["Field"] . "</label>";
+
+                if ($row["Field"] == "plevel") { $inputType = "number" ; }
+                elseif ($row["Field"] == "isadmin") { $inputType = "checkbox"; }
+
+                $form .= "<input type='" . $inputType . "' name='" . $row["Field"] . "' id='" . $row['Field'] . "'>";
+            }
+        }
+        // return $fields;
+        return $form;
+    }
+
     function getAllUsers($conn) {
         $query = 'SELECT * FROM users';
 
@@ -33,13 +59,17 @@
 
         $query = "INSERT INTO users ($insert_fields) VALUES ($insert_values)";
 
-        // echo $query;
+        //echo $query;
 
         $result = $conn->prepare($query);
         $addedUser = $result->execute(array_values($allPostEntries));
 
         if ($addedUser) {
-            return array("result" => $addedUser); // "added new user";
+            $newID = $conn->lastInsertId();
+            $query = "SELECT * FROM users WHERE id='" . $newID . "'";
+
+            $newUser = $conn->query($query);
+            return $newUser->fetch(PDO::FETCH_ASSOC);
         } else {
             return array("result" => false);
         }

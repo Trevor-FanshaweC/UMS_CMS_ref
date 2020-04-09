@@ -1,6 +1,10 @@
 <?php
     include('functions.php');
 
+    if (isset($_GET["get_form"])) {
+        $result = getUserFormFields($pdo);
+    }
+
     //check the request params as they come in
     if (isset($_GET["get_users"])) {
         $result = getAllUsers($pdo);

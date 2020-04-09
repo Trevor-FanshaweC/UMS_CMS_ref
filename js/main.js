@@ -6,7 +6,7 @@ import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.esm.browser.js
             users: []
         },
 
-        created: function() {
+        created: function () {
             // manageUsers takes 3 arguments - a method, a parameters object and an optional callback
             // the callback in this case is just an anonymous function that pushes the database
             // query result into the users array
@@ -14,6 +14,8 @@ import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.esm.browser.js
                 // push user into the VM users array
                 myVM.users = data;
             });
+
+            this.getAddUpdateFormFields();
         },
 
         methods: {
@@ -25,13 +27,13 @@ import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.esm.browser.js
                 let ops = {
                     "getAll": { path: `get_users=true`, options: null },
 
-                    "deleteOne": { 
+                    "deleteOne": {
                         path: `delete_user=true&&user_id=${params.id ? params.id : null}`,
                         options: { method: 'DELETE' }
                     },
 
-                    "addOne": { 
-                        path: `add_user=true`, 
+                    "addOne": {
+                        path: `add_user=true`,
                         options: {
                             method: 'POST',
                             headers: {
@@ -47,14 +49,14 @@ import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.esm.browser.js
                 let url = `./includes/UMS.php?${ops[op].path}`;
 
                 fetch(url, ops[op].options)
-                .then(res => res.json())
-                .then(data => { 
-                    console.log(data);
-                    // if there is a callback passed into the manageUsers method, 
-                    // then invoke it here
-                    if (cb) { cb(data) }
-                 })
-                .catch((err) => console.log(err))
+                    .then(res => res.json())
+                    .then(data => {
+                        // console.log(data);
+                        // if there is a callback passed into the manageUsers method, 
+                        // then invoke it here
+                        if (cb) { cb(data) }
+                    })
+                    .catch((err) => console.log(err))
             },
 
             convertToQueryString(obj) {
@@ -69,18 +71,50 @@ import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.esm.browser.js
                     this.users = this.users.filter(user => user.fname !== currentuser.fname);
                 } else {
                     this.users.push(currentuser)
-                }         
+                }
+
+                document.querySelector('form').reset();
             },
 
             createUser() {
                 let formData = new FormData(document.querySelector('form')),
                     userData = {};
-    
+
                 for (let [key, value] of formData.entries()) {
                     userData[key] = value;
                 }
-    
+
                 this.manageUsers("addOne", userData, (data) => this.updateUserList(data, "add"));
+            },
+
+            getAddUpdateFormFields() {
+                let url = './includes/UMS.php?get_form=true';
+
+                fetch(url)
+                    .then(r => r.json())
+                    .then(d => {
+                        debugger;
+                        console.log(d);
+
+                        // could do the processing on the client side, but not a great approach
+                        // this.buildAddUpdateForm(d);
+                    })
+                    .catch((err) => console.error(err));
+            },
+
+            buildAddUpdateForm(fields) {
+                let inputType = "text";
+                // map the values to inputs and then show them on the page
+                // would also have to create the labels and append them with some logic
+                let addUserFormContent = fields.map((field) => {
+                    if (field === "plevel") {
+                        inputType = "number";
+                    } else if (field === "isadmin") {
+                        inputType = "checkbox"
+                    }
+
+                    return `<input type="${inputType}" name=${field} id="${field}">`
+                }).join('');
             }
         },
 
