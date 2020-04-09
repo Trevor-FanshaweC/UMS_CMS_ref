@@ -9,6 +9,7 @@ Back end runs on PDO with a procedural approach - no OOP, just functions and a v
 - implement Docker
 - move the Fetch API functionality to an external file and then re-import
 - change the strategy to async / await instead of callbacks
+- upgrade to OOP PHP
 
 ## Requirements:
 - Vue 
