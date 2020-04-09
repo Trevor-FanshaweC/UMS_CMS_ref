@@ -19,8 +19,6 @@
         $result = addUser($pdo);
     }
 
-    //echo "back in ums.php";
-
     echo json_encode($result);
 
     // could add other if statements here for a UMS system like adding or patching a user

@@ -21,6 +21,7 @@
                 elseif ($row["Field"] == "isadmin") { $inputType = "checkbox"; }
 
                 $form .= "<input type='" . $inputType . "' name='" . $row["Field"] . "' id='" . $row['Field'] . "'>";
+                $form .= "<input type='submit' value='Submit'>";
             }
         }
         // return $fields;

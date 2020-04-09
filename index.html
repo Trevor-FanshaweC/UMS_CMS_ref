@@ -20,7 +20,7 @@
             </li>
         </ul>
 
-        <h3>Add User</h3>
+        <h3>Add or Edit User</h3>
 
         <section class="add-user-form">
             <form @submit.prevent="createUser">
@@ -39,10 +39,6 @@
 
                 <label for="permissions">Permissions (1 -5)</label>
                 <input type="number" name="plevel" min="1" max="5" required>
-
-                <!-- <label for="avatar">Avatar</label>
-                <input type="hidden" name="admin" value="null">
-                <input type="checkbox" name="admin" value="null"> -->
 
                 <input type="submit" value="Add User">
 
